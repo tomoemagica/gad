@@ -1,5 +1,5 @@
 # gad
- Gender age detection
+ Gender detection
  
  Download
  Gender and Age Detection Python Project
