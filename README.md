@@ -31,17 +31,11 @@ how to use
 Double click gad.bat to execute.
 
 In the image in the DFL\workspace\data_src folder,
-Video frames in which Female, 0-2 years old or 4-6 years old or 8-12 years old or 15-20 years old or 25-32 years old, are detected,
+Video frames in which Female are detected,
 
 Move to the workspace\data_src\match folder.
-
-Very young ages are included because some Japanese are detected as very young.
-If you are targeting Europeans and Americans, you can correct the age judgment in gad.py.
 
 Unfortunately, the original gad.py covers frames in video images,
 An error occurred when uploading the face image.
 
 Attempting to process images in workspace\data_src\aligned will result in an error.
-
-The basename is required for the operation of the program.
-This can be done, for example, by installing msys64.
