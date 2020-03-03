@@ -47,34 +47,46 @@ target_dir = os.getcwd()
 target_dir = os.path.join(target_dir, 'data_src')
 match_path = os.path.join(target_dir, 'match')
 #file_name = sys.argv[1]
-file_name = input()
+#file_name = input()
 #print(f'{os.path.basename(file_name)}')
-image = file_name
 
-video=cv2.VideoCapture(image if image else 0)
-padding=20
+#Count how many files in the directory
+file_count = len(os.listdir(target_dir))
 
-hasFrame,frame=video.read()
+#Show some stats
+print("Checking " + str(file_count) + " files")
 
-if hasFrame and not frame is None:
-    resultImg,faceBoxes=highlightFace(faceNet,frame)
-    if not faceBoxes is None:
-        for faceBox in faceBoxes:
-            face=frame[max(0,faceBox[1]-padding):
-                       min(faceBox[3]+padding,frame.shape[0]-1),max(0,faceBox[0]-padding)
-                       :min(faceBox[2]+padding, frame.shape[1]-1)]
-            if not face is None:
-                blob=cv2.dnn.blobFromImage(face, 1.0, (227,227), MODEL_MEAN_VALUES, swapRB=False)
-                genderNet.setInput(blob)
-                genderPreds=genderNet.forward()
-                gender=genderList[genderPreds[0].argmax()]
+for thisFile in os.listdir(target_dir):
+    file_name = os.path.join(target_dir, thisFile)
+#   print(f'{file_name}')
+    print("Working on " + str(file_count) + ": " + str(file_name))
 
-                ageNet.setInput(blob)
-                agePreds=ageNet.forward()
-                age=ageList[agePreds[0].argmax()]
+    image = file_name
 
-                if not gender is None and gender == 'Female':
-                    print(f'{file_name}, {gender}, {age[1:-1]}')
-                    move(
-                        file_name, match_path)
+    video=cv2.VideoCapture(image if image else 0)
+    padding=20
+
+    hasFrame,frame=video.read()
+
+    if hasFrame and not frame is None:
+        resultImg,faceBoxes=highlightFace(faceNet,frame)
+        if not faceBoxes is None:
+            for faceBox in faceBoxes:
+                face=frame[max(0,faceBox[1]-padding):
+                           min(faceBox[3]+padding,frame.shape[0]-1),max(0,faceBox[0]-padding)
+                           :min(faceBox[2]+padding, frame.shape[1]-1)]
+                if not face is None:
+                    blob=cv2.dnn.blobFromImage(face, 1.0, (227,227), MODEL_MEAN_VALUES, swapRB=False)
+                    genderNet.setInput(blob)
+                    genderPreds=genderNet.forward()
+                    gender=genderList[genderPreds[0].argmax()]
+
+                    ageNet.setInput(blob)
+                    agePreds=ageNet.forward()
+                    age=ageList[agePreds[0].argmax()]
+
+                    if not gender is None and gender == 'Female':
+                        print(f'{file_name}, {gender}, {age[1:-1]}')
+                        move(
+                            file_name, match_path)
 
