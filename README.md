@@ -25,10 +25,10 @@ Download gad.py and gad.bat.
 Download URL
 https://github.com/tomoemagica/gad
 
-Put gad.py and gad.bat in DFL\workspace.
+Put gad.py in DFL\workspace.
 
 how to use
-Double click gad.bat to execute.
+py gad.py
 
 In the image in the DFL\workspace\data_src folder,
 Video frames in which Female are detected,
@@ -39,3 +39,5 @@ Unfortunately, the original gad.py covers frames in video images,
 An error occurred when uploading the face image.
 
 Attempting to process images in workspace\data_src\aligned will result in an error.
+
+Unfortunately, for a large number of images, the program stops prematurely.
