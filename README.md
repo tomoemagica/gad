@@ -14,15 +14,11 @@
  
 Unzip the file,
 
-Place in DFL\workspace.
+Place in C:\Program Files\Python-3.7.6\gad\
 
 opencv_face_detector.pbtxt
 
 opencv_face_detector_uint8.pb
-
-age_deploy.prototxt
-
-age_net.caffemodel
 
 gender_deploy.prototxt
 
@@ -31,7 +27,7 @@ gender_net.caffemodel
 You can delete the sample image file.
 
 
-Download gad.py and gad.bat.
+Download gad.py
 
 Download URL
 
@@ -40,6 +36,7 @@ https://github.com/tomoemagica/gad
 Put gad.py in DFL\workspace.
 
 how to use
+
 py gad.py
 
 In the image in the DFL\workspace\data_src folder,
