@@ -4,22 +4,22 @@ import argparse
 import sys
 import os
 from os import path
-from shutil import move, copy
+from shutil import move
 from pathlib import Path, PureWindowsPath
 
-faceProto="opencv_face_detector.pbtxt"
-faceModel="opencv_face_detector_uint8.pb"
-ageProto="age_deploy.prototxt"
-ageModel="age_net.caffemodel"
-genderProto="gender_deploy.prototxt"
-genderModel="gender_net.caffemodel"
+# Usage: py gad.py
+
+gadpath = r"C:/Program Files/Python-3.7.6/gad/"
+
+faceProto = gadpath + "opencv_face_detector.pbtxt"
+faceModel = gadpath + "opencv_face_detector_uint8.pb"
+genderProto = gadpath + "gender_deploy.prototxt"
+genderModel = gadpath + "gender_net.caffemodel"
 
 MODEL_MEAN_VALUES=(78.4263377603, 87.7689143744, 114.895847746)
-ageList=['(0-2)', '(4-6)', '(8-12)', '(15-20)', '(25-32)', '(38-43)', '(48-53)', '(60-100)']
 genderList=['Male','Female']
 
 faceNet=cv2.dnn.readNet(faceModel,faceProto)
-ageNet=cv2.dnn.readNet(ageModel,ageProto)
 genderNet=cv2.dnn.readNet(genderModel,genderProto)
 
 def highlightFace(net, frame, conf_threshold=0.7):
@@ -45,10 +45,7 @@ def highlightFace(net, frame, conf_threshold=0.7):
 
 target_dir = os.getcwd()
 target_dir = os.path.join(target_dir, 'data_src')
-match_path = os.path.join(target_dir, 'match')
-#file_name = sys.argv[1]
-#file_name = input()
-#print(f'{os.path.basename(file_name)}')
+match_path = os.path.join(target_dir, 'Female')
 
 #Count how many files in the directory
 file_count = len(os.listdir(target_dir))
@@ -56,10 +53,18 @@ file_count = len(os.listdir(target_dir))
 #Show some stats
 print("Checking " + str(file_count) + " files")
 
+#Make sure the path exists and if not, create it.
+if not path.isdir(match_path):
+    try:
+        os.mkdir(match_path)
+    except OSError:
+        print("Creation of the directory %s failed" % match_path)
+    else:
+        print("Successfully created the directory %s " % match_path)
+
 for thisFile in os.listdir(target_dir):
     file_name = os.path.join(target_dir, thisFile)
-#   print(f'{file_name}')
-    print("Working on " + str(file_count) + ": " + str(file_name))
+#   print("Working on " + str(file_count) + ": " + str(file_name))
 
     image = file_name
 
@@ -81,12 +86,8 @@ for thisFile in os.listdir(target_dir):
                     genderPreds=genderNet.forward()
                     gender=genderList[genderPreds[0].argmax()]
 
-                    ageNet.setInput(blob)
-                    agePreds=ageNet.forward()
-                    age=ageList[agePreds[0].argmax()]
-
                     if not gender is None and gender == 'Female':
-                        print(f'{file_name}, {gender}, {age[1:-1]}')
+#                       print(f'{file_name}, {gender}')
                         move(
                             file_name, match_path)
 
