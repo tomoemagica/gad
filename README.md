@@ -39,15 +39,11 @@ how to use
 
 py gad.py
 
-In the image in the DFL\workspace\data_src folder,
+In the image in the DFL\workspace\data_src\aligned folder,
 
 Video frames in which Female are detected,
 
-Move to the workspace\data_src\Female folder.
-
-Unfortunately, the original gad.py covers video image frames.
-
-Attempting to process images in workspace\data_src\aligned will result in an error.
+Move to the workspace\data_src\\aligned\female folder.
 
 
 性別検出
@@ -88,12 +84,8 @@ gad.pyをDFL\workspaceに配置します。
 
 py gad.py
 
-DFL\workspace\data_srcフォルダー内の画像で、
+DFL\workspace\data_src\alignedフォルダー内の画像で、
 
 女性が検出されたビデオフレーム、
 
-workspace\data_src\Femaleフォルダーに移動します。
-
-残念ながら、元のgad.pyはビデオ画像のフレームが対象です。
-
-workspace\data_src\alignedで画像を処理しようとすると、エラーが発生します。
+workspace\data_src\\aligned\femaleフォルダーに移動します。
