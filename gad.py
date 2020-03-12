@@ -45,7 +45,8 @@ def highlightFace(net, frame, conf_threshold=0.7):
 
 target_dir = os.getcwd()
 target_dir = os.path.join(target_dir, 'data_src')
-match_path = os.path.join(target_dir, 'Female')
+target_dir = os.path.join(target_dir, 'aligned')
+match_path = os.path.join(target_dir, 'female')
 
 #Count how many files in the directory
 file_count = len(os.listdir(target_dir))
@@ -64,30 +65,26 @@ if not path.isdir(match_path):
 
 for thisFile in os.listdir(target_dir):
     file_name = os.path.join(target_dir, thisFile)
-#   print("Working on " + str(file_count) + ": " + str(file_name))
 
     image = file_name
 
-    video=cv2.VideoCapture(image if image else 0)
-    padding=20
+    frame = cv2.imread(image)
 
-    hasFrame,frame=video.read()
-
-    if hasFrame and not frame is None:
+    if not frame is None:
         resultImg,faceBoxes=highlightFace(faceNet,frame)
         if not faceBoxes is None:
             for faceBox in faceBoxes:
-                face=frame[max(0,faceBox[1]-padding):
-                           min(faceBox[3]+padding,frame.shape[0]-1),max(0,faceBox[0]-padding)
-                           :min(faceBox[2]+padding, frame.shape[1]-1)]
-                if not face is None:
-                    blob=cv2.dnn.blobFromImage(face, 1.0, (227,227), MODEL_MEAN_VALUES, swapRB=False)
+                face=frame[max(0,faceBox[1]):
+                           min(faceBox[3],frame.shape[0]-1),max(0,faceBox[0])
+                           :min(faceBox[2], frame.shape[1]-1)]
+                if not face is None and face.size > 255:
+                    blob=cv2.dnn.blobFromImage(face, 1.0, (227,227), MODEL_MEAN_VALUES, swapRB=False, crop=False)
                     genderNet.setInput(blob)
                     genderPreds=genderNet.forward()
                     gender=genderList[genderPreds[0].argmax()]
 
                     if not gender is None and gender == 'Female':
-#                       print(f'{file_name}, {gender}')
-                        move(
-                            file_name, match_path)
+                        if os.path.isfile(file_name):
+                            move(
+                                file_name, match_path)
 
