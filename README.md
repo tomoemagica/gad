@@ -41,10 +41,13 @@ py gad.py
 
 In the image in the DFL\workspace\data_src\aligned folder,
 
-Video frames in which Female are detected,
+Face image file in which Female are detected,
 
-Move to the workspace\data_src\\aligned\female folder.
+Move to the workspace\data_src\aligned\female folder.
 
+Face image file in which Male are detected,
+
+Move to the workspace\data_src\aligned\male folder.
 
 性別検出
 
@@ -86,6 +89,10 @@ py gad.py
 
 DFL\workspace\data_src\alignedフォルダー内の画像で、
 
-女性が検出されたビデオフレーム、
+女性が検出された顔画像、
 
-workspace\data_src\\aligned\femaleフォルダーに移動します。
+workspace\data_src\aligned\femaleフォルダーに移動します。
+
+男性が検出された顔画像、
+
+workspace\data_src\aligned\maleフォルダーに移動します。
