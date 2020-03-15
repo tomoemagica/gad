@@ -47,6 +47,7 @@ target_dir = os.getcwd()
 target_dir = os.path.join(target_dir, 'data_src')
 target_dir = os.path.join(target_dir, 'aligned')
 match_path = os.path.join(target_dir, 'female')
+male_path  = os.path.join(target_dir, 'male')
 
 #Count how many files in the directory
 file_count = len(os.listdir(target_dir))
@@ -62,6 +63,15 @@ if not path.isdir(match_path):
         print("Creation of the directory %s failed" % match_path)
     else:
         print("Successfully created the directory %s " % match_path)
+
+if not path.isdir(male_path):
+    try:
+        os.mkdir(male_path)
+    except OSError:
+        print("Creation of the directory %s failed" % male_path)
+    else:
+        print("Successfully created the directory %s " % male_path)
+
 
 for thisFile in os.listdir(target_dir):
     file_name = os.path.join(target_dir, thisFile)
@@ -87,4 +97,8 @@ for thisFile in os.listdir(target_dir):
                         if os.path.isfile(file_name):
                             move(
                                 file_name, match_path)
+                    elif not gender is None and gender == 'Male':
+                        if os.path.isfile(file_name):
+                            move(
+                                file_name, male_path)
 
